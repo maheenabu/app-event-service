@@ -1,6 +1,6 @@
 package com.example.csm.app.mapper;
 
-import com.example.csm.app.dto.CsmEmployeeEvent;
+import com.example.csm.app.dto.MSCEmployeeEvent;
 import com.example.csm.app.validation.FlattenResult;
 import com.example.csm.app.validation.ValidationError;
 import com.example.csm.model.*;
@@ -9,11 +9,11 @@ import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
-public final class CsmEventMapper {
+public final class MSCEventMapper {
 
-    private CsmEventMapper() {}
+    private MSCEventMapper() {}
 
-    public static FlattenResult<CsmEmployeeEvent> validateAndFlatten(FormCSMEventsRequest root) {
+    public static FlattenResult<MSCEmployeeEvent> validateAndFlatten(FormCSMEventsRequest root) {
         final List<ValidationError> errors = new ArrayList<>();
 
         final List<FormCSMEvent> events = Optional.ofNullable(root)
@@ -25,7 +25,7 @@ public final class CsmEventMapper {
             return FlattenResult.of(Collections.emptyList(), errors);
         }
 
-        final List<CsmEmployeeEvent> items =
+        final List<MSCEmployeeEvent> items =
                 IntStream.range(0, events.size())
                         .mapToObj(idx -> flattenEvent(events.get(idx), idx, errors))
                         .filter(Objects::nonNull)
@@ -35,7 +35,7 @@ public final class CsmEventMapper {
         return FlattenResult.of(items, errors);
     }
 
-    private static List<CsmEmployeeEvent> flattenEvent(FormCSMEvent evt, int evtIdx, List<ValidationError> errors) {
+    private static List<MSCEmployeeEvent> flattenEvent(FormCSMEvent evt, int evtIdx, List<ValidationError> errors) {
         final String base = "formCSMEvents[" + evtIdx + "]";
 
         final Header header = Optional.ofNullable(evt.getHeader())
@@ -64,7 +64,7 @@ public final class CsmEventMapper {
                         errors.add(new ValidationError(empPath + ".empId", "is mandatory and must not be empty"));
                     }
 
-                    return CsmEmployeeEvent.builder()
+                    return MSCEmployeeEvent.builder()
                             .eventStatus(nz(header.getEventStatus()))
                             .deliveryChannelId(nz(header.getDeliveryChannelId()))
                             .svpSessionId(details == null ? "" : nz(details.getSvpSessionId()))

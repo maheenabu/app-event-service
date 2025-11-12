@@ -1,6 +1,6 @@
 package com.example.csm.app.service;
 
-import com.example.csm.app.dto.CsmEmployeeEvent;
+import com.example.csm.app.dto.MSCEmployeeEvent;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.*;
@@ -12,21 +12,22 @@ import java.util.*;
 
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-@SpringJUnitConfig(classes = CsmEventsServiceImplTest.Config.class)
-class CsmEventsServiceImplTest {
+@SpringJUnitConfig(classes = MSCEventsServiceImplTest.Config.class)
+class MSCEventsServiceImplTest {
 
     @Configuration
     static class Config {
-        @Bean CsmEventsService csmEventsService() { return new CsmEventsServiceImpl(); }
+        @Bean
+        MSCEventsService csmEventsService() { return new MSCEventsServiceImpl(); }
         @Bean MethodValidationPostProcessor methodValidationPostProcessor() { return new MethodValidationPostProcessor(); }
     }
 
     @Autowired
-    private CsmEventsService service;
+    private MSCEventsService service;
 
     @Test
     void processBatch_valid_noException() {
-        CsmEmployeeEvent item = CsmEmployeeEvent.builder()
+        MSCEmployeeEvent item = MSCEmployeeEvent.builder()
                 .eventStatus("abc")
                 .deliveryChannelId("1234")
                 .svpSessionId("4545")

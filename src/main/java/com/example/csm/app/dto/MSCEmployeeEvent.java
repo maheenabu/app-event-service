@@ -5,7 +5,7 @@ import jakarta.validation.constraints.NotNull;
 import java.util.Collections;
 import java.util.Map;
 
-public final class CsmEmployeeEvent {
+public final class MSCEmployeeEvent {
     @NotBlank private final String eventStatus;
     @NotBlank private final String deliveryChannelId;
     @NotBlank private final String svpSessionId;
@@ -13,7 +13,7 @@ public final class CsmEmployeeEvent {
     @NotBlank private final String empId;
     @NotNull  private final Map<String, Object> extras;
 
-    private CsmEmployeeEvent(Builder b) {
+    private MSCEmployeeEvent(Builder b) {
         this.eventStatus = b.eventStatus;
         this.deliveryChannelId = b.deliveryChannelId;
         this.svpSessionId = b.svpSessionId;
@@ -33,7 +33,7 @@ public final class CsmEmployeeEvent {
         public Builder formId(String v){ this.formId=v; return this; }
         public Builder empId(String v){ this.empId=v; return this; }
         public Builder extras(Map<String,Object> v){ this.extras=v; return this; }
-        public CsmEmployeeEvent build(){ return new CsmEmployeeEvent(this); }
+        public MSCEmployeeEvent build(){ return new MSCEmployeeEvent(this); }
     }
 
     public String getEventStatus(){ return eventStatus; }

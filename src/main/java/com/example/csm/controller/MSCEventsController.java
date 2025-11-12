@@ -3,11 +3,11 @@ package com.example.csm.controller;
 import com.example.csm.api.CSMEventsApi;
 import com.example.csm.model.CreateResponse;
 import com.example.csm.model.FormCSMEventsRequest;
-import com.example.csm.app.dto.CsmEmployeeEvent;
-import com.example.csm.app.mapper.CsmEventMapper;
+import com.example.csm.app.dto.MSCEmployeeEvent;
+import com.example.csm.app.mapper.MSCEventMapper;
 import com.example.csm.app.validation.FlattenResult;
 import com.example.csm.app.validation.ValidationError;
-import com.example.csm.app.service.CsmEventsService;
+import com.example.csm.app.service.MSCEventsService;
 
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
@@ -17,11 +17,11 @@ import java.util.UUID;
 import java.util.stream.Collectors;
 
 @RestController
-public class CsmEventsController implements CSMEventsApi {
+public class MSCEventsController implements CSMEventsApi {
 
-    private final CsmEventsService service;
+    private final MSCEventsService service;
 
-    public CsmEventsController(CsmEventsService service) {
+    public MSCEventsController(MSCEventsService service) {
         this.service = service;
     }
 
@@ -29,7 +29,7 @@ public class CsmEventsController implements CSMEventsApi {
     public ResponseEntity<CreateResponse> createCsmEvents(@Valid FormCSMEventsRequest body) {
         final String corrId = UUID.randomUUID().toString();
 
-        FlattenResult<CsmEmployeeEvent> res = CsmEventMapper.validateAndFlatten(body);
+        FlattenResult<MSCEmployeeEvent> res = MSCEventMapper.validateAndFlatten(body);
 
         if (!res.isOk()) {
             String message = res.getErrors().stream()

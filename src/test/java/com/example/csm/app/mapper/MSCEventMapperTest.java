@@ -1,6 +1,6 @@
 package com.example.csm.app.mapper;
 
-import com.example.csm.app.dto.CsmEmployeeEvent;
+import com.example.csm.app.dto.MSCEmployeeEvent;
 import com.example.csm.app.validation.FlattenResult;
 import com.example.csm.app.validation.ValidationError;
 import com.example.csm.model.*;
@@ -10,7 +10,7 @@ import java.util.*;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-class CsmEventMapperTest {
+class MSCEventMapperTest {
 
     private FormCSMEventsRequest validRequest() {
         Header header = new Header();
@@ -42,11 +42,11 @@ class CsmEventMapperTest {
 
     @Test
     void validateAndFlatten_valid_ok() {
-        FlattenResult<CsmEmployeeEvent> result = CsmEventMapper.validateAndFlatten(validRequest());
+        FlattenResult<MSCEmployeeEvent> result = MSCEventMapper.validateAndFlatten(validRequest());
         assertThat(result.isOk()).isTrue();
         assertThat(result.getErrors()).isEmpty();
         assertThat(result.getItems()).hasSize(1);
-        CsmEmployeeEvent row = result.getItems().get(0);
+        MSCEmployeeEvent row = result.getItems().get(0);
         assertThat(row.getEmpId()).isEqualTo("1566");
         assertThat(row.getEventStatus()).isEqualTo("abc");
         assertThat(row.getDeliveryChannelId()).isEqualTo("1234");
@@ -57,7 +57,7 @@ class CsmEventMapperTest {
 
     @Test
     void validateAndFlatten_missing_formCSMEvents_errors() {
-        FlattenResult<CsmEmployeeEvent> result = CsmEventMapper.validateAndFlatten(new FormCSMEventsRequest());
+        FlattenResult<MSCEmployeeEvent> result = MSCEventMapper.validateAndFlatten(new FormCSMEventsRequest());
         assertThat(result.isOk()).isFalse();
         assertThat(result.getItems()).isEmpty();
         assertThat(result.getErrors())
@@ -69,7 +69,7 @@ class CsmEventMapperTest {
     void validateAndFlatten_missing_header_errors() {
         FormCSMEventsRequest req = validRequest();
         req.getFormCSMEvents().get(0).setHeader(null);
-        FlattenResult<CsmEmployeeEvent> result = CsmEventMapper.validateAndFlatten(req);
+        FlattenResult<MSCEmployeeEvent> result = MSCEventMapper.validateAndFlatten(req);
         assertThat(result.isOk()).isFalse();
         assertThat(result.getErrors())
                 .anySatisfy(e -> {
@@ -82,7 +82,7 @@ class CsmEventMapperTest {
     void validateAndFlatten_missing_eventData_errors() {
         FormCSMEventsRequest req = validRequest();
         req.getFormCSMEvents().get(0).setEventData(null);
-        FlattenResult<CsmEmployeeEvent> result = CsmEventMapper.validateAndFlatten(req);
+        FlattenResult<MSCEmployeeEvent> result = MSCEventMapper.validateAndFlatten(req);
         assertThat(result.isOk()).isFalse();
         assertThat(result.getErrors())
                 .anySatisfy(e -> assertThat(e.getPath()).isEqualTo("formCSMEvents[0].eventData"));
@@ -92,7 +92,7 @@ class CsmEventMapperTest {
     void validateAndFlatten_empty_employees_errors() {
         FormCSMEventsRequest req = validRequest();
         req.getFormCSMEvents().get(0).getEventData().setEmployees(Collections.emptyList());
-        FlattenResult<CsmEmployeeEvent> result = CsmEventMapper.validateAndFlatten(req);
+        FlattenResult<MSCEmployeeEvent> result = MSCEventMapper.validateAndFlatten(req);
         assertThat(result.isOk()).isFalse();
         assertThat(result.getErrors())
                 .anySatisfy(e -> assertThat(e.getPath()).isEqualTo("formCSMEvents[0].eventData.employees"));
@@ -102,7 +102,7 @@ class CsmEventMapperTest {
     void validateAndFlatten_missing_empId_sets_error_and_row_present() {
         FormCSMEventsRequest req = validRequest();
         req.getFormCSMEvents().get(0).getEventData().getEmployees().get(0).setEmpId(null);
-        FlattenResult<CsmEmployeeEvent> result = CsmEventMapper.validateAndFlatten(req);
+        FlattenResult<MSCEmployeeEvent> result = MSCEventMapper.validateAndFlatten(req);
         assertThat(result.isOk()).isFalse();
         assertThat(result.getItems()).hasSize(1);
         assertThat(result.getErrors())

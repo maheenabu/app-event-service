@@ -1,6 +1,6 @@
 package com.example.csm.controller;
 
-import com.example.csm.app.service.CsmEventsService;
+import com.example.csm.app.service.MSCEventsService;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,11 +13,11 @@ import static org.mockito.ArgumentMatchers.anyList;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
-@WebMvcTest(controllers = CsmEventsController.class)
-class CsmEventsControllerTest {
+@WebMvcTest(controllers = MSCEventsController.class)
+class MSCEventsControllerTest {
 
     @Autowired private MockMvc mockMvc;
-    @MockBean private CsmEventsService service;
+    @MockBean private MSCEventsService service;
 
     private String validJson() {
         return "{\n" +

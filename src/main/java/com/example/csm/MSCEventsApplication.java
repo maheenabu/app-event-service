@@ -4,8 +4,8 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class CsmEventsApplication {
+public class MSCEventsApplication {
   public static void main(String[] args) {
-    SpringApplication.run(CsmEventsApplication.class, args);
+    SpringApplication.run(MSCEventsApplication.class, args);
   }
 }
