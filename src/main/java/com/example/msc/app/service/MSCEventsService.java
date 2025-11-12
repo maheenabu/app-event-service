@@ -1,6 +1,6 @@
-package com.example.csm.app.service;
+package com.example.msc.app.service;
 
-import com.example.csm.app.dto.MSCEmployeeEvent;
+import com.example.msc.app.dto.MSCEmployeeEvent;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotEmpty;
 

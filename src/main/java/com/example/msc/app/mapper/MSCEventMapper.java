@@ -1,9 +1,9 @@
-package com.example.csm.app.mapper;
+package com.example.msc.app.mapper;
 
-import com.example.csm.app.dto.MSCEmployeeEvent;
-import com.example.csm.app.validation.FlattenResult;
-import com.example.csm.app.validation.ValidationError;
-import com.example.csm.model.*;
+import com.example.msc.app.dto.MSCEmployeeEvent;
+import com.example.msc.app.validation.FlattenResult;
+import com.example.msc.app.validation.ValidationError;
+import com.example.msc.model.*;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -13,15 +13,15 @@ public final class MSCEventMapper {
 
     private MSCEventMapper() {}
 
-    public static FlattenResult<MSCEmployeeEvent> validateAndFlatten(FormCSMEventsRequest root) {
+    public static FlattenResult<MSCEmployeeEvent> validateAndFlatten(FormMSCEventsRequest root) {
         final List<ValidationError> errors = new ArrayList<>();
 
-        final List<FormCSMEvent> events = Optional.ofNullable(root)
-                .map(FormCSMEventsRequest::getFormCSMEvents)
+        final List<FormMSCEvent> events = Optional.ofNullable(root)
+                .map(MSCEventsApplication::getFormMSCEvents)
                 .orElse(null);
 
         if (events == null || events.isEmpty()) {
-            errors.add(new ValidationError("formCSMEvents", "is required and must not be empty"));
+            errors.add(new ValidationError("formMSCEvents", "is required and must not be empty"));
             return FlattenResult.of(Collections.emptyList(), errors);
         }
 
@@ -35,8 +35,8 @@ public final class MSCEventMapper {
         return FlattenResult.of(items, errors);
     }
 
-    private static List<MSCEmployeeEvent> flattenEvent(FormCSMEvent evt, int evtIdx, List<ValidationError> errors) {
-        final String base = "formCSMEvents[" + evtIdx + "]";
+    private static List<MSCEmployeeEvent> flattenEvent(FormMSCEvent evt, int evtIdx, List<ValidationError> errors) {
+        final String base = "formMSCEvents[" + evtIdx + "]";
 
         final Header header = Optional.ofNullable(evt.getHeader())
                 .orElseGet(() -> { errors.add(new ValidationError(base + ".header", "is mandatory")); return null; });
@@ -67,7 +67,7 @@ public final class MSCEventMapper {
                     return MSCEmployeeEvent.builder()
                             .eventStatus(nz(header.getEventStatus()))
                             .deliveryChannelId(nz(header.getDeliveryChannelId()))
-                            .svpSessionId(details == null ? "" : nz(details.getSvpSessionId()))
+                            .sessionId(details == null ? "" : nz(details.getSessionId()))
                             .formId(details == null ? "" : nz(details.getFormId()))
                             .empId(empId)
                             .extras(Optional.ofNullable(emp.getAdditionalProperties()).orElse(Collections.emptyMap()))

@@ -1,4 +1,4 @@
-package com.example.csm.app.validation;
+package com.example.msc.app.validation;
 
 public final class ValidationError {
     private final String path;

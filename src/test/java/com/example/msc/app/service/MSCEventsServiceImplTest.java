@@ -1,6 +1,6 @@
-package com.example.csm.app.service;
+package com.example.msc.app.service;
 
-import com.example.csm.app.dto.MSCEmployeeEvent;
+import com.example.msc.app.dto.MSCEmployeeEvent;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.*;
@@ -18,7 +18,7 @@ class MSCEventsServiceImplTest {
     @Configuration
     static class Config {
         @Bean
-        MSCEventsService csmEventsService() { return new MSCEventsServiceImpl(); }
+        MSCEventsService mscEventsService() { return new MSCEventsServiceImpl(); }
         @Bean MethodValidationPostProcessor methodValidationPostProcessor() { return new MethodValidationPostProcessor(); }
     }
 
@@ -30,7 +30,7 @@ class MSCEventsServiceImplTest {
         MSCEmployeeEvent item = MSCEmployeeEvent.builder()
                 .eventStatus("abc")
                 .deliveryChannelId("1234")
-                .svpSessionId("4545")
+                .sessionId("4545")
                 .formId("7878")
                 .empId("1566")
                 .extras(Collections.singletonMap("role", "Engineer"))

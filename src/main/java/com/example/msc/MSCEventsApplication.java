@@ -1,4 +1,4 @@
-package com.example.csm;
+package com.example.msc;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

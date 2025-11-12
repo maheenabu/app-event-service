@@ -1,13 +1,13 @@
-package com.example.csm.controller;
+package com.example.msc.controller;
 
-import com.example.csm.api.CSMEventsApi;
-import com.example.csm.model.CreateResponse;
-import com.example.csm.model.FormCSMEventsRequest;
-import com.example.csm.app.dto.MSCEmployeeEvent;
-import com.example.csm.app.mapper.MSCEventMapper;
-import com.example.csm.app.validation.FlattenResult;
-import com.example.csm.app.validation.ValidationError;
-import com.example.csm.app.service.MSCEventsService;
+import com.example.msc.api.MSCEventsApi;
+import com.example.msc.model.CreateResponse;
+import com.example.msc.model.FormMSCEventsRequest;
+import com.example.msc.app.dto.MSCEmployeeEvent;
+import com.example.msc.app.mapper.MSCEventMapper;
+import com.example.msc.app.validation.FlattenResult;
+import com.example.msc.app.validation.ValidationError;
+import com.example.msc.app.service.MSCEventsService;
 
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
@@ -17,7 +17,7 @@ import java.util.UUID;
 import java.util.stream.Collectors;
 
 @RestController
-public class MSCEventsController implements CSMEventsApi {
+public class MSCEventsController implements MSCEventsApi {
 
     private final MSCEventsService service;
 
@@ -26,7 +26,7 @@ public class MSCEventsController implements CSMEventsApi {
     }
 
     @Override
-    public ResponseEntity<CreateResponse> createCsmEvents(@Valid FormCSMEventsRequest body) {
+    public ResponseEntity<CreateResponse> createMSCEvents(@Valid FormMSCEventsRequest body) {
         final String corrId = UUID.randomUUID().toString();
 
         FlattenResult<MSCEmployeeEvent> res = MSCEventMapper.validateAndFlatten(body);

@@ -1,9 +1,9 @@
-package com.example.csm.app.mapper;
+package com.example.msc.app.mapper;
 
-import com.example.csm.app.dto.MSCEmployeeEvent;
-import com.example.csm.app.validation.FlattenResult;
-import com.example.csm.app.validation.ValidationError;
-import com.example.csm.model.*;
+import com.example.msc.app.dto.MSCEmployeeEvent;
+import com.example.msc.app.validation.FlattenResult;
+import com.example.msc.app.validation.ValidationError;
+import com.example.msc.model.*;
 import org.junit.jupiter.api.Test;
 
 import java.util.*;
@@ -12,13 +12,13 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 class MSCEventMapperTest {
 
-    private FormCSMEventsRequest validRequest() {
+    private FormMSCEventsRequest validRequest() {
         Header header = new Header();
         header.setEventStatus("abc");
         header.setDeliveryChannelId("1234");
 
         EventDetailData detail = new EventDetailData();
-        detail.setSvpSessionId("4545");
+        detail.setÏSessionId("4545");
         detail.setFormId("7878");
 
         Employee e1 = new Employee();
@@ -31,12 +31,12 @@ class MSCEventMapperTest {
         data.setEventDetailData(detail);
         data.setEmployees(Collections.singletonList(e1));
 
-        FormCSMEvent event = new FormCSMEvent();
+        FormMSCEvent event = new FormMSCEvent();
         event.setHeader(header);
         event.setEventData(data);
 
-        FormCSMEventsRequest req = new FormCSMEventsRequest();
-        req.setFormCSMEvents(Collections.singletonList(event));
+        FormMSCEventsRequest req = new FormMSCEventsRequest();
+        req.setFormMSCEvents(Collections.singletonList(event));
         return req;
     }
 
@@ -50,64 +50,64 @@ class MSCEventMapperTest {
         assertThat(row.getEmpId()).isEqualTo("1566");
         assertThat(row.getEventStatus()).isEqualTo("abc");
         assertThat(row.getDeliveryChannelId()).isEqualTo("1234");
-        assertThat(row.getSvpSessionId()).isEqualTo("4545");
+        assertThat(row.getSessionId()).isEqualTo("4545");
         assertThat(row.getFormId()).isEqualTo("7878");
         assertThat(row.getExtras()).containsEntry("role", "Engineer");
     }
 
     @Test
-    void validateAndFlatten_missing_formCSMEvents_errors() {
-        FlattenResult<MSCEmployeeEvent> result = MSCEventMapper.validateAndFlatten(new FormCSMEventsRequest());
+    void validateAndFlatten_missing_formMSCEvents_errors() {
+        FlattenResult<MSCEmployeeEvent> result = MSCEventMapper.validateAndFlatten(new FormMSCEventsRequest());
         assertThat(result.isOk()).isFalse();
         assertThat(result.getItems()).isEmpty();
         assertThat(result.getErrors())
                 .extracting(ValidationError::getPath)
-                .containsExactly("formCSMEvents");
+                .containsExactly("formMSCEvents");
     }
 
     @Test
     void validateAndFlatten_missing_header_errors() {
-        FormCSMEventsRequest req = validRequest();
-        req.getFormCSMEvents().get(0).setHeader(null);
+        FormMSCEventsRequest req = validRequest();
+        req.getFormMSCEvents().get(0).setHeader(null);
         FlattenResult<MSCEmployeeEvent> result = MSCEventMapper.validateAndFlatten(req);
         assertThat(result.isOk()).isFalse();
         assertThat(result.getErrors())
                 .anySatisfy(e -> {
-                    assertThat(e.getPath()).isEqualTo("formCSMEvents[0].header");
+                    assertThat(e.getPath()).isEqualTo("formMSCEvents[0].header");
                     assertThat(e.getMessage()).contains("mandatory");
                 });
     }
 
     @Test
     void validateAndFlatten_missing_eventData_errors() {
-        FormCSMEventsRequest req = validRequest();
-        req.getFormCSMEvents().get(0).setEventData(null);
+        FormMSCEventsRequest req = validRequest();
+        req.getFormMSCEvents().get(0).setEventData(null);
         FlattenResult<MSCEmployeeEvent> result = MSCEventMapper.validateAndFlatten(req);
         assertThat(result.isOk()).isFalse();
         assertThat(result.getErrors())
-                .anySatisfy(e -> assertThat(e.getPath()).isEqualTo("formCSMEvents[0].eventData"));
+                .anySatisfy(e -> assertThat(e.getPath()).isEqualTo("formMSCEvents[0].eventData"));
     }
 
     @Test
     void validateAndFlatten_empty_employees_errors() {
-        FormCSMEventsRequest req = validRequest();
-        req.getFormCSMEvents().get(0).getEventData().setEmployees(Collections.emptyList());
+        FormMSCEventsRequest req = validRequest();
+        req.getFormMSCEvents().get(0).getEventData().setEmployees(Collections.emptyList());
         FlattenResult<MSCEmployeeEvent> result = MSCEventMapper.validateAndFlatten(req);
         assertThat(result.isOk()).isFalse();
         assertThat(result.getErrors())
-                .anySatisfy(e -> assertThat(e.getPath()).isEqualTo("formCSMEvents[0].eventData.employees"));
+                .anySatisfy(e -> assertThat(e.getPath()).isEqualTo("formMSCEvents[0].eventData.employees"));
     }
 
     @Test
     void validateAndFlatten_missing_empId_sets_error_and_row_present() {
-        FormCSMEventsRequest req = validRequest();
-        req.getFormCSMEvents().get(0).getEventData().getEmployees().get(0).setEmpId(null);
+        FormMSCEventsRequest req = validRequest();
+        req.getFormMSCEvents().get(0).getEventData().getEmployees().get(0).setEmpId(null);
         FlattenResult<MSCEmployeeEvent> result = MSCEventMapper.validateAndFlatten(req);
         assertThat(result.isOk()).isFalse();
         assertThat(result.getItems()).hasSize(1);
         assertThat(result.getErrors())
                 .anySatisfy(e -> {
-                    assertThat(e.getPath()).isEqualTo("formCSMEvents[0].eventData.employees[0].empId");
+                    assertThat(e.getPath()).isEqualTo("formMSCEvents[0].eventData.employees[0].empId");
                     assertThat(e.getMessage()).contains("mandatory");
                 });
     }

@@ -1,6 +1,6 @@
-package com.example.csm.controller;
+package com.example.msc.controller;
 
-import com.example.csm.app.service.MSCEventsService;
+import com.example.msc.app.service.MSCEventsService;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,11 +21,11 @@ class MSCEventsControllerTest {
 
     private String validJson() {
         return "{\n" +
-                "  \"formCSMEvents\": [\n" +
+                "  \"formMSCEvents\": [\n" +
                 "    {\n" +
                 "      \"header\": {\"eventStatus\": \"abc\", \"deliveryChannelId\": \"1234\"},\n" +
                 "      \"eventData\": {\n" +
-                "        \"eventDetailData\": {\"svpSessionId\": \"4545\", \"formId\": \"7878\"},\n" +
+                "        \"eventDetailData\": {\"sÏessionId\": \"4545\", \"formId\": \"7878\"},\n" +
                 "        \"employees\": [\n" +
                 "          {\"empId\": \"1566\", \"role\": \"Engineer\"}\n" +
                 "        ]\n" +
@@ -36,10 +36,10 @@ class MSCEventsControllerTest {
     }
 
     @Test
-    void createCsmEvents_valid_201_and_calls_service() throws Exception {
+    void createmSCEvents_valid_201_and_calls_service() throws Exception {
         Mockito.doNothing().when(service).processBatch(anyList());
 
-        mockMvc.perform(post("/api/v1/csm-events")
+        mockMvc.perform(post("/api/v1/msc-events")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(validJson()))
                 .andExpect(status().isCreated())
@@ -49,17 +49,17 @@ class MSCEventsControllerTest {
     }
 
     @Test
-    void createCsmEvents_missing_employees_400() throws Exception {
+    void createmsCEvents_missing_employees_400() throws Exception {
         String invalid = "{\n" +
-                "  \"formCSMEvents\": [\n" +
+                "  \"formMSCEvents\": [\n" +
                 "    {\n" +
                 "      \"header\": {\"eventStatus\": \"abc\", \"deliveryChannelId\": \"1234\"},\n" +
-                "      \"eventData\": {\"eventDetailData\": {\"svpSessionId\": \"4545\", \"formId\": \"7878\"}}\n" +
+                "      \"eventData\": {\"eventDetailData\": {\"sessionId\": \"4545\", \"formId\": \"7878\"}}\n" +
                 "    }\n" +
                 "  ]\n" +
                 "}";
 
-        mockMvc.perform(post("/api/v1/csm-events")
+        mockMvc.perform(post("/api/v1/msc-events")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(invalid))
                 .andExpect(status().isBadRequest())

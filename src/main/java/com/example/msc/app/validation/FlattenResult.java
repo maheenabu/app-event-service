@@ -1,4 +1,4 @@
-package com.example.csm.app.validation;
+package com.example.msc.app.validation;
 
 import java.util.Collections;
 import java.util.List;

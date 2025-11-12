@@ -1,9 +1,9 @@
-package com.example.csm;
+package com.example.msc;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class CsmEventsApplicationTest {
+class MScEventsApplicationTest {
     @Test void contextLoads() {}
 }
