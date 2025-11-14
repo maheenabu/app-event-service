@@ -1,0 +1,1 @@
+package com.example.msc.service.validation; public class MscEventValidator {}

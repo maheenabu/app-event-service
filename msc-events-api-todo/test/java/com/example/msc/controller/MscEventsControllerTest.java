@@ -1,0 +1,1 @@
+package com.example.msc.controller; public class MscEventsControllerTest {}
