@@ -1,0 +1,58 @@
+openapi: 3.0.3
+info:
+  title: MSC Events API
+  version: 1.0.0
+
+paths:
+  /msc-events:
+    post:
+      summary: Create MSC Events
+      operationId: createMscEvents
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/FormMSCEventsRequest'
+      responses:
+        '201':
+          description: Event created successfully
+        '400':
+          description: Invalid request payload
+        '500':
+          description: Internal server error
+
+components:
+  schemas:
+
+    FormMSCEventsRequest:
+      type: object
+      properties:
+        formMSCEvents:
+          type: array
+          items:
+            $ref: '#/components/schemas/FormMSCEvent'
+      required:
+        - formMSCEvents
+      additionalProperties: true
+
+    FormMSCEvent:
+      type: object
+      properties:
+        header:
+          $ref: '#/components/schemas/EventHeader'
+      required:
+        - header
+      additionalProperties: true
+
+    EventHeader:
+      type: object
+      properties:
+        eventStatus:
+          type: string
+        delChanId:
+          type: string
+      required:
+        - eventStatus
+        - delChanId
+      additionalProperties: true
